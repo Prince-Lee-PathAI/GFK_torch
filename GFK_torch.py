@@ -8,8 +8,8 @@ def degenerated_GSVD(A,B):
     """
     Implementation of the Generalized SVD algorithm where matrix A is invertible
 
-    :param A:  matrix A with shape [n,n] 10 10
-    :param B:  matrix B with shape [b,n] 758 10
+    :param A:  matrix A with shape [n,n] 
+    :param B:  matrix B with shape [b,n]
     :return: [V1,V2,V,Gam,Sig] where A = V1*Gam*V^T and B = V2*Sig*V^T are both SVD.
     """
     B_InvA = B @ torch.linalg.inv(A)
