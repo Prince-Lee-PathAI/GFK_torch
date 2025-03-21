@@ -128,7 +128,7 @@ class GFK:
         # Equation (6)
         B1 = torch.diag(0.5 * (1 + (torch.sin(2 * theta) / (2. * torch.maximum(theta, torch.tensor(self.eps))))))
         B2 = torch.diag(0.5 * ((torch.cos(2 * theta) - 1) / (2 * torch.maximum(theta, torch.tensor(self.eps)))))
-        B3 = B2.clone()  # B3 和 B2 相同
+        B3 = B2.clone()  # B3 = B2 
         B4 = torch.diag(0.5 * (1 - (torch.sin(2 * theta) / (2. * torch.maximum(theta, torch.tensor(self.eps))))))
 
         # Equation (9) of the suplementary matetial
