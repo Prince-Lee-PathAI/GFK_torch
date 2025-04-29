@@ -13,7 +13,7 @@ def degenerated_GSVD(A,B):
     :return: [V1,V2,V,Gam,Sig] where A = V1*Gam*V^T and B = V2*Sig*V^T are both SVD.
     """
     B_InvA = B @ torch.linalg.inv(A)
-    V2,S,V1_h = torch.linalg.svd(B_InvA,full_matrices=False)
+    V2,S,V1_h = torch.linalg.svd(B_InvA)
     V1 = V1_h.H
     # assert torch.dist(B_InvA, V2[:, :A.shape[1]] @ torch.diag(S) @ V1_h) < 1e-3
 
@@ -120,6 +120,7 @@ class GFK:
         # assert torch.dist(torch.linalg.inv(A) @ A, torch.eye(dim)) < 1e-3 # check the orthogonality of A
         B = QPt[dim:, :]
         V1, V2, V, Gam, Sig = degenerated_GSVD(A, B) # Since A is invertible, GSVD can be degenerated in a simpler way
+        # V1 in [dim, dim]; V2 in [N-dim, N-dim]
 
         V2 = -V2
         # print(torch.diag(torch.diag(Gam)))
@@ -130,6 +131,7 @@ class GFK:
         B2 = torch.diag(0.5 * ((torch.cos(2 * theta) - 1) / (2 * torch.maximum(theta, torch.tensor(self.eps)))))
         B3 = B2.clone()  # B3 = B2 
         B4 = torch.diag(0.5 * (1 - (torch.sin(2 * theta) / (2. * torch.maximum(theta, torch.tensor(self.eps))))))
+        # B1,B2,B3,B4 all in [dim, dim]
 
         # Equation (9) of the suplementary matetial
         delta1_1 = torch.hstack((V1, torch.zeros((dim, N - dim)).cuda()))
