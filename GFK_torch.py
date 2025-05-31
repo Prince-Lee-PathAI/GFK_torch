@@ -32,8 +32,8 @@ def degenerated_GSVD(A,B):
 
 def null_space(A):
     # A is colum Orthogonal matrix
-    A_complement, _ = torch.linalg.qr(A,mode='complete')
-    return A_complement
+    U, _, _ = torch.linalg.svd(A, full_matrices=True)
+    return U
 
 
 def sqrt_SymTensor(t):
